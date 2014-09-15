@@ -1,6 +1,6 @@
 # grunt-email-friendly-templates
 
-> Grunt plugin to convert Jade/HTML templates to email friendly templates. Also compiles LESS to CSS if a file is specified.
+> Grunt plugin to convert Jade/HTML templates to email friendly templates.
 
 ## Getting Started
 This plugin requires Grunt `~0.4.5`
@@ -19,8 +19,8 @@ grunt.loadNpmTasks('grunt-email-friendly-templates');
 
 ## Dependencies
 This plugin uses LESS compiler v1.3.3 (we'll update this soon)
-[https://www.npmjs.org/package/jade](Jade compiler)
-[https://github.com/peterbe/premailer](Premailer)
+<br>[Jade compiler](https://www.npmjs.org/package/jade)
+<br>[Premailer](https://github.com/peterbe/premailer)
 
 ## The "email_friendly_templates" task
 
