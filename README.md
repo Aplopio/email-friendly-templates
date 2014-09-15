@@ -17,6 +17,11 @@ Once the plugin has been installed, it may be enabled inside your Gruntfile with
 grunt.loadNpmTasks('grunt-email-friendly-templates');
 ```
 
+## Dependencies
+This plugin uses LESS compiler v1.3.3 (we'll update this soon)
+[https://www.npmjs.org/package/jade](Jade compiler)
+[https://github.com/peterbe/premailer](Premailer)
+
 ## The "email_friendly_templates" task
 
 ### Overview
@@ -52,31 +57,71 @@ A string value that is used to do something else with whatever else.
 ### Usage Examples
 
 #### Default Options
-In this example, the default options are used to do something with whatever. So if the `testing` file has the content `Testing` and the `123` file had the content `1 2 3`, the generated result would be `Testing, 1 2 3.`
+In this example, the `foo.jade` & `foo.less` is compiled to email friendly HTML
+template `foo.html`. Internally the specified LESS file is compiled to CSS file before compiling the template.
+
+```jade
+// foo.jade
+html
+  head
+    link(rel="stylesheet", href="./foo.css")
+
+  body
+    h1 Some heading
+    a(href="#") some link
+    .container
+      .nested-element
+        span Some span
+```
+
+```less
+// foo.less
+h1{
+    color: red;
+}
+
+.container {
+    background: red;
+
+    .nested-element {
+        border: 1px solid white;
+    }
+}
+```
+
+```html
+<!-- compiled foo.html -->
+<html>
+  <head>
+    </head>
+  <body>
+    <h1 style="color:red">Some heading</h1>
+    <a href="#">some link</a>
+    <div style="background:red">
+      <div style="border:1px solid white"><span>Some span</span></div>
+    </div>
+  </body>
+</html>
+
+```
 
 ```js
 grunt.initConfig({
   email_friendly_templates: {
     options: {},
     files: {
-      'dest/default_options': ['src/testing', 'src/123'],
-    },
-  },
-});
-```
-
-#### Custom Options
-In this example, custom options are used to do something else with whatever else. So if the `testing` file has the content `Testing` and the `123` file had the content `1 2 3`, the generated result in this case would be `Testing: 1 2 3 !!!`
-
-```js
-grunt.initConfig({
-  email_friendly_templates: {
-    options: {
-      separator: ': ',
-      punctuation: ' !!!',
-    },
-    files: {
-      'dest/default_options': ['src/testing', 'src/123'],
+      // Must be either a Jade file or HTML file
+      src: 'foo.jade',
+      // Output file path for the compiled HTML, if not specified file is
+      // compiled in the same folder
+      dest: 'foo.html',
+      // If a LESS file path is specified then it is compiled to CSS first
+      // before compiling the template. Do not specify this option if the styles
+      // are defined in head tag
+      less: 'foo.less',
+       // If a compiled file already exists then that is overwritten. Default value
+       // is false
+      overwrite: true
     },
   },
 });

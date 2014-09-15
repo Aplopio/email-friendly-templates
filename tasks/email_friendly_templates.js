@@ -30,15 +30,17 @@ module.exports = function(grunt) {
           input_filepath = path.resolve(cwd, options.src[0]),
           less_filepath = options.less,
           overwrite = !! options.overwrite,
-          output_filepath = path.resolve(cwd, options.dest),
-          script_arguments;
+          output_filepath = options.dest,
+          script_arguments = ' -f ' + input_filepath;
 
       if (!grunt.file.exists(input_filepath)) {
         grunt.log.warn('Source file "' + input_filepath + '" not found.');
         return;
       }
 
-      script_arguments = ' -f ' + input_filepath + ' -o ' + output_filepath;
+      if ( output_filepath ) {
+        script_arguments += ' -o ' + path.resolve(cwd, output_filepath);
+      }
 
       if ( less_filepath ) {
         script_arguments += ' --less-file ' + path.resolve(cwd, less_filepath);
@@ -47,8 +49,6 @@ module.exports = function(grunt) {
       if ( overwrite ) {
         script_arguments += ' --force ';
       }
-
-      debugger;
 
       exec( 'sh ' + script_path + script_arguments, function(err, stdout, stderr) {
         if ( err ) {
