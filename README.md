@@ -95,7 +95,7 @@ h1{
 grunt.initConfig({
   email_friendly_templates: {
     options: {},
-    files: {
+    files: [{
       // Must be either a Jade file or HTML file
       src: 'foo.jade',
       // Output file path for the compiled HTML, if not specified file is
@@ -108,7 +108,7 @@ grunt.initConfig({
        // If a compiled file already exists then that is overwritten. Default value
        // is false
       overwrite: true
-    },
+    }]
   },
 });
 ```
