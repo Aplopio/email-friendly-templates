@@ -82,12 +82,20 @@ function jade_to_html
     mkdir $tmp_dir
   fi
   tmp_html="$tmp_dir/compiled_html_$$_$RANDOM.html"
+  prev_dir=$(pwd)
 
+  cd $(dirname $input_file)
   jade -P -p . < $input_file > $tmp_html
+  cd $prev_dir
 }
 
 function compile_html
 {
+  if [ -f $less_file ]; then
+    prev_dir=$(pwd)
+    cd $(dirname $less_file)
+  fi
+
   python -m premailer --remove-classes --disable-validation -f $1 > $output_file
 }
 
