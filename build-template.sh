@@ -16,7 +16,7 @@ tmp_html=
 output_css_file=
 
 ### Functions
-function usage
+usage()
 {
 cat << __EOF__
 
@@ -35,7 +35,7 @@ Options:
 __EOF__
 }
 
-function validate_input_file
+validate_input_file()
 {
   if [ "$input_file" = "" ]; then
     # 1>&2 redirects the stdout to stderr
@@ -55,7 +55,7 @@ function validate_input_file
   fi
 }
 
-function clean_up
+clean_up()
 {
   if [ "$tmp_dir" != "" ] && [ -d $tmp_dir ]; then
     rm -rf $tmp_dir
@@ -66,7 +66,7 @@ function clean_up
   fi
 }
 
-function less_to_css
+less_to_css()
 {
   less_file_folder=$(dirname $less_file)
   less_file_basename=$(basename $less_file ".less")
@@ -75,7 +75,7 @@ function less_to_css
   lessc -x $less_file $output_css_file
 }
 
-function jade_to_html
+jade_to_html()
 {
   tmp_dir="$input_file_folder/$TMP_DIRNAME"
   if [ ! -d tmp_dir ]; then
@@ -89,7 +89,7 @@ function jade_to_html
   cd $prev_dir
 }
 
-function compile_html
+compile_html()
 {
   if [ -f $less_file ]; then
     prev_dir=$(pwd)
@@ -99,7 +99,7 @@ function compile_html
   python -m premailer --remove-classes --disable-validation -f $1 > $output_file
 }
 
-function perform_compilation
+perform_compilation()
 {
   # If input file is already compiled & overwriting is not enforced then exit
   if [ -f $output_file ] && [ "$force" != "1" ]; then

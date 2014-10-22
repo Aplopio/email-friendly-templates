@@ -51,7 +51,7 @@ module.exports = function(grunt) {
         script_arguments += ' --force ';
       }
 
-      exec( 'sh ' + script_path + script_arguments, function(err, stdout, stderr) {
+      exec( 'bash ' + script_path + script_arguments, function(err, stdout, stderr) {
         if ( err || stderr ) {
           grunt.warn( err || stderr );
         } else {

@@ -1,7 +1,7 @@
 {
   "name": "grunt-email-friendly-templates",
   "description": "Grunt plugin to convert Jade/HTML templates to email friendly templates. Also compiles LESS to CSS if a file is specified.",
-  "version": "0.1.2",
+  "version": "0.1.3",
   "homepage": "https://github.com/Aplopio/email-friendly-templates",
   "author": {
     "name": "Mudassir Ali"
