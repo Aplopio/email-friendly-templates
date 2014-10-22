@@ -22,6 +22,7 @@ module.exports = function(grunt) {
       }),
       path = require('path'),
       cwd = process.cwd(),
+      done = this.async(),
       script_path = cwd + '/node_modules/grunt-email-friendly-templates/build-template.sh';
 
     // Iterate over all specified file groups.
@@ -51,10 +52,13 @@ module.exports = function(grunt) {
       }
 
       exec( 'sh ' + script_path + script_arguments, function(err, stdout, stderr) {
-        if ( err ) {
-          grunt.warn( err );
+        if ( err || stderr ) {
+          grunt.warn( err || stderr );
+        } else {
+          grunt.log.writeln('Email friendly templates compilation complete.');
         }
-        grunt.log.writeln('Email friendly templates compilation complete.')
+
+        done();
       });
 
     });
