@@ -52,6 +52,10 @@ module.exports = function(grunt) {
       }
 
       exec( 'bash ' + script_path + script_arguments, function(err, stdout, stderr) {
+        if ( stdout ) {
+          grunt.log.writeln( stdout );
+        }
+
         if ( err || stderr ) {
           grunt.warn( err || stderr );
         } else {
