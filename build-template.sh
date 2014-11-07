@@ -96,7 +96,7 @@ compile_html()
     cd $(dirname $less_file)
   fi
 
-  python inlinestyler_cli.py $1 $output_file
+  inlinestyler_cli.py $1 $output_file
 }
 
 perform_compilation()
@@ -148,6 +148,7 @@ while [ "$1" != "" ]; do
   shift
 done
 
+$PATH=$PATH:$(dirname $0)
 
 ### Validations
 input_file_extension="${input_file##*.}"
