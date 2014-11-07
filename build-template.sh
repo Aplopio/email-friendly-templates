@@ -148,7 +148,7 @@ while [ "$1" != "" ]; do
   shift
 done
 
-$PATH=$PATH:$(dirname $0)
+PATH=$PATH:$(dirname $0)
 
 ### Validations
 input_file_extension="${input_file##*.}"
