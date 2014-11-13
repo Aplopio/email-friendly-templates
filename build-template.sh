@@ -96,9 +96,7 @@ compile_html()
     cd $(dirname $less_file)
   fi
 
-  python -m premailer --remove-classes --disable-validation -f $1 > $output_file.tmp
-  sed -e 's/\("%7B%7B\)/"{{/g' -e 's/\(%7D%7D"\)/}}"/g' $output_file.tmp > $output_file
-  rm $output_file.tmp
+  inlinestyler_cli.py $1 $output_file
 }
 
 perform_compilation()
@@ -150,6 +148,7 @@ while [ "$1" != "" ]; do
   shift
 done
 
+PATH=$PATH:$(dirname $0)
 
 ### Validations
 input_file_extension="${input_file##*.}"
