@@ -85,7 +85,7 @@ jade_to_html()
   prev_dir=$(pwd)
 
   cd $(dirname $input_file)
-  jade -P -p . < $input_file > $tmp_html
+  jade -P -p . $input_file > $tmp_html
   if [[ $? != 0 ]]; then
       clean_up
       exit 1
