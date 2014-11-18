@@ -7,7 +7,7 @@
  */
 
 'use strict';
-var exec = require('child_process').exec;
+var exec = require('shelljs').exec;
 
 module.exports = function(grunt) {
 
@@ -22,7 +22,6 @@ module.exports = function(grunt) {
       }),
       path = require('path'),
       cwd = process.cwd(),
-      done = this.async(),
       script_path = cwd + '/node_modules/grunt-email-friendly-templates/build-template.sh';
 
     // Iterate over all specified file groups.
@@ -51,19 +50,12 @@ module.exports = function(grunt) {
         script_arguments += ' --force ';
       }
 
-      exec( 'bash ' + script_path + script_arguments, function(err, stdout, stderr) {
-        if ( stdout ) {
-          grunt.log.writeln( stdout );
-        }
-
-        if ( err || stderr ) {
-          grunt.warn( err || stderr );
-        } else {
+      var exec_result = exec('bash ' + script_path + script_arguments);
+      if (exec_result.code !== 0) {
+          grunt.warn(exec_result.output);
+      } else {
           grunt.log.writeln('Email friendly templates compilation complete.');
-        }
-
-        done();
-      });
+      }
 
     });
   });

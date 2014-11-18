@@ -85,7 +85,11 @@ jade_to_html()
   prev_dir=$(pwd)
 
   cd $(dirname $input_file)
-  jade -P -p . < $input_file > $tmp_html
+  jade -P -p . $input_file > $tmp_html
+  if [[ $? != 0 ]]; then
+      clean_up
+      exit 1
+  fi
   cd $prev_dir
 }
 
@@ -119,7 +123,6 @@ perform_compilation()
 
   clean_up
 }
-
 
 ### Clean up any temporary files created on receiving terminate signals
 trap clean_up SIGHUP SIGINT SIGTERM
