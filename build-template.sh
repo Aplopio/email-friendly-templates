@@ -85,7 +85,7 @@ jade_to_html()
   prev_dir=$(pwd)
 
   cd $(dirname $input_file)
-  echo Running jade on -> $input_file
+  echo "Running jade on -> $input_file"
   jade -P -p . < $input_file > $tmp_html
   cd $prev_dir
 }
