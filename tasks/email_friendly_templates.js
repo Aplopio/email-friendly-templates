@@ -20,13 +20,18 @@ module.exports = function(grunt) {
         punctuation: '.',
         separator: ', '
       }),
+      is_completed = [],
       path = require('path'),
       cwd = process.cwd(),
       done = this.async(),
       script_path = cwd + '/node_modules/grunt-email-friendly-templates/build-template.sh';
 
+    for(var i = 0; i < this.files.length; i++) {
+      is_completed.push(false);
+    }
+
     // Iterate over all specified file groups.
-    this.files.forEach(function(f) {
+    this.files.forEach(function(f, index, array) {
       var options = f.orig,
           input_filepath = path.resolve(cwd, options.src[0]),
           less_filepath = options.less,
@@ -61,11 +66,16 @@ module.exports = function(grunt) {
         } else {
           grunt.log.writeln('Email friendly templates compilation complete.');
         }
-
-        done();
+        is_completed[index] = true;
       });
-
     });
+    setTimeout(function(){
+      if( is_completed.reduce(function(acc, curr){
+        return acc && curr;
+      }), false){
+        done();
+      }
+    }, 1000);
   });
 
 };

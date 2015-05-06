@@ -71,6 +71,7 @@ less_to_css()
   less_file_folder=$(dirname $less_file)
   less_file_basename=$(basename $less_file ".less")
   output_css_file="$less_file_folder/$less_file_basename.css"
+  echo "lessc on -> $less_file"
 
   lessc -x $less_file $output_css_file
 }
