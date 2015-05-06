@@ -70,16 +70,18 @@ module.exports = function(grunt) {
         is_completed[index] = true;
       });
     });
-    var completed = is_completed.reduce(
-      function(acc, curr){
-        return acc && curr;
-      }, true),
-        intervelId = setInterval(function(){
-          if( completed ) {
-            clearInterval(intervelId);
-            done();
-          }
-        }, 500);
+    var intervelId = setInterval(function(){
+      var completed = is_completed.reduce(
+        function(acc, curr){
+          return acc && curr;
+        }, true);
+      if( completed ) {
+        clearInterval(intervelId);
+        done();
+      } else {
+        grunt.log.writeln('Status: ' + is_completed);
+      }
+    }, 1000);
   });
 
 };
