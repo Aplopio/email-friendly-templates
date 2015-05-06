@@ -62,7 +62,8 @@ module.exports = function(grunt) {
         }
 
         if ( err || stderr ) {
-          grunt.warn( err || stderr );
+          grunt.log.warn( ' in ' + input_filepath );
+          grunt.log.warn( err || stderr );
         } else {
           grunt.log.writeln('Email friendly templates compilation complete.');
         }
