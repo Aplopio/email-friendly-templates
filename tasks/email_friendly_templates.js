@@ -79,7 +79,7 @@ module.exports = function(grunt) {
         clearInterval(intervelId);
         done();
       } else {
-        grunt.log.writeln('Status: ' + is_completed);
+        grunt.log.write('.');
       }
     }, 1000);
   });
