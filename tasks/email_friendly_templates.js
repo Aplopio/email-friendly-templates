@@ -73,7 +73,7 @@ module.exports = function(grunt) {
     setTimeout(function(){
       if( is_completed.reduce(function(acc, curr){
         return acc && curr;
-      }), false){
+      }), true) {
         done();
       }
     }, 1000);
