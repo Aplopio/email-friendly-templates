@@ -70,13 +70,16 @@ module.exports = function(grunt) {
         is_completed[index] = true;
       });
     });
-    setTimeout(function(){
-      if( is_completed.reduce(function(acc, curr){
+    var completed = is_completed.reduce(
+      function(acc, curr){
         return acc && curr;
-      }), true) {
-        done();
-      }
-    }, 1000);
+      }, true),
+        intervelId = setInterval(function(){
+          if( completed ) {
+            clearInterval(intervelId);
+            done();
+          }
+        }, 500);
   });
 
 };
