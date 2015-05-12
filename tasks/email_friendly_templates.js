@@ -24,7 +24,8 @@ module.exports = function(grunt) {
       path = require('path'),
       cwd = process.cwd(),
       done = this.async(),
-      script_path = cwd + '/node_modules/grunt-email-friendly-templates/build-template.sh';
+      script_dir = (this.data.script_dir || cwd) + '/node_modules/grunt-email-friendly-templates',
+      script_path =  script_dir  + '/build-template.sh';
 
     for(var i = 0; i < this.files.length; i++) {
       is_completed.push(false);
@@ -37,7 +38,7 @@ module.exports = function(grunt) {
           less_filepath = options.less,
           overwrite = !! options.overwrite,
           output_filepath = options.dest,
-          script_arguments = ' -f ' + input_filepath;
+          script_arguments = ' -f ' + input_filepath + ' -s ' + path.resolve(script_dir);
 
       if (!grunt.file.exists(input_filepath)) {
         grunt.log.warn('Source file "' + input_filepath + '" not found.');

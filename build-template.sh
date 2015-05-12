@@ -14,6 +14,8 @@ input_file_extension=
 tmp_dir=
 tmp_html=
 output_css_file=
+script_dir=
+
 
 ### Functions
 usage()
@@ -30,6 +32,7 @@ Options:
   -l, --less-file     less file to compile before compiling html, if not specified
                       script will look for the less file in input file directory.
                       If the file doesn't exist in the same directory either, it's ignored.
+  -s, --script-dir    Path of inliner script
   --force             Force overwrite the output file if it already exists.
 
 __EOF__
@@ -95,8 +98,7 @@ compile_html()
     prev_dir=$(pwd)
     cd $(dirname $less_file)
   fi
-
-  inlinestyler_cli.py $1 $output_file
+  $script_dir/inlinestyler_cli.py $1 $output_file
 }
 
 perform_compilation()
@@ -138,6 +140,9 @@ while [ "$1" != "" ]; do
                           less_file=$1
                           ;;
     --force )             force=1
+                          ;;
+    -s | --script-dir )   shift
+                          script_dir=$1
                           ;;
     -h | --help )         usage
                           exit
