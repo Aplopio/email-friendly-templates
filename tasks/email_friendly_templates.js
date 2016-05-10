@@ -7,7 +7,7 @@
  */
 
 'use strict';
-var exec = require('child_process').exec;
+var exec = require('child_process').execSync;
 
 module.exports = function(grunt) {
 
@@ -20,16 +20,11 @@ module.exports = function(grunt) {
         punctuation: '.',
         separator: ', '
       }),
-      is_completed = [],
       path = require('path'),
       cwd = process.cwd(),
       done = this.async(),
       script_dir = (this.data.script_dir || cwd) + '/node_modules/grunt-email-friendly-templates',
       script_path =  script_dir  + '/build-template.sh';
-
-    for(var i = 0; i < this.files.length; i++) {
-      is_completed.push(false);
-    }
 
     // Iterate over all specified file groups.
     this.files.forEach(function(f, index, array) {
@@ -57,32 +52,11 @@ module.exports = function(grunt) {
         script_arguments += ' --force ';
       }
 
-      exec( 'bash ' + script_path + script_arguments, function(err, stdout, stderr) {
-        if ( stdout ) {
-          grunt.log.writeln( stdout );
-        }
+      exec( 'bash ' + script_path + script_arguments, {stdio:[0,1,2]});
+      grunt.log.writeln(options.src[0] + ' compilation complete.');
 
-        if ( err || stderr ) {
-          grunt.log.warn( ' in ' + input_filepath );
-          grunt.log.warn( err || stderr );
-        } else {
-          grunt.log.writeln('Email friendly templates compilation complete.');
-        }
-        is_completed[index] = true;
-      });
     });
-    var intervelId = setInterval(function(){
-      var completed = is_completed.reduce(
-        function(acc, curr){
-          return acc && curr;
-        }, true);
-      if( completed ) {
-        clearInterval(intervelId);
-        done();
-      } else {
-        grunt.log.write('.');
-      }
-    }, 1000);
+
   });
 
 };
