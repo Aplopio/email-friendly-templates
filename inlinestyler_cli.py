@@ -3,6 +3,7 @@
 
 import sys
 
+PY3 = sys.version_info[0] == 3
 
 try:
     from inlinestyler.utils import inline_css
@@ -19,6 +20,9 @@ if __name__ == "__main__":
             output = inline_css(content)
 
             with open(sys.argv[2], 'w') as output_file:
-                output_file.write(str(output.encode('utf-8')))
+                if PY3:
+                    output_file.write(str(output))
+                else:
+                    output_file.write(str(output.encode('utf-8')))
         print("completed")
         exit(0)
