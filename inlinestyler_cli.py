@@ -21,7 +21,7 @@ if __name__ == "__main__":
 
             with open(sys.argv[2], 'w') as output_file:
                 if PY3:
-                    output_file.write(str(output))
+                    output_file.write(str(output.decode("utf-8")))
                 else:
                     output_file.write(str(output.encode('utf-8')))
         print("completed")
