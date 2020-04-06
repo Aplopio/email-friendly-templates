@@ -19,10 +19,11 @@ if __name__ == "__main__":
             content = input_file.read()
             output = inline_css(content)
 
-            with open(sys.argv[2], 'w') as output_file:
-                if PY3:
-                    output_file.write(str(output.decode("utf-8")))
-                else:
+            if PY3:
+                with open(sys.argv[2], 'wb') as output_file:
+                    output_file.write(output.encode("utf-8"))
+            else:
+                with open(sys.argv[2], 'w') as output_file:
                     output_file.write(str(output.encode('utf-8')))
         print("completed")
         exit(0)
