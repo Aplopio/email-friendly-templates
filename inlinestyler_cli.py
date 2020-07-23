@@ -24,6 +24,6 @@ if __name__ == "__main__":
                     output_file.write(output.encode("utf-8"))
             else:
                 with open(sys.argv[2], 'w') as output_file:
-                    output_file.write(str(output))
+                    output_file.write(output.encode('utf-8'))
         print("completed")
         exit(0)
