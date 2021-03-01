@@ -20,9 +20,12 @@ if __name__ == "__main__":
             output = inline_css(content)
 
             if PY3:
+                print('PY3')
                 with open(sys.argv[2], 'wb') as output_file:
-                    output_file.write(output.encode("utf-8"))
+                    #output_file.write(output.encode("utf-8"))
+                    output_file.write(output)
             else:
+                print('PY2')
                 with open(sys.argv[2], 'w') as output_file:
                     output_file.write(output.encode('utf-8'))
         print("completed")
